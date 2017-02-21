@@ -1,0 +1,5 @@
+Fisherman1 : type1 , type6 , 
+Fisherman2 : type1 , type6 , type2 , 
+Fisherman3 : type9 , type9 , type6 , type3 , 
+Fisherman4 : type1 , type1 , type9 , 
+Fisherman5 : type1 , type2 , type3 , type4 , type5 , type6 , type7 , type8 , type9 , 
