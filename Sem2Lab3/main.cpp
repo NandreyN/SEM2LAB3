@@ -18,17 +18,35 @@ void split(const string& str, vector<string>& target)
 
 ostream& dline(ostream& o)
 {
-	o << "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl;
+	o << "______________________________________________________________________________________________________________" << endl;
 	return o;
 }
 
 void getUnion(const vector<set<string>>& setsCollection, set<string>& target)
 {
+	assert(setsCollection.size() > 0);
 	for_each(setsCollection.begin(), setsCollection.end(), [&target](const set<string>& st)
 	{
 		target.insert(st.begin(), st.end());
 	});
 }
+
+void getIntersection(const vector<set<string>>& setsCollection, set<string>& target)
+{
+	set<string> bk;
+	assert(setsCollection.size() > 0);
+	if (setsCollection.size() == 1) { target = setsCollection[0]; return; }
+
+	set_intersection(setsCollection[0].begin(), setsCollection[0].end(), setsCollection[1].begin(), setsCollection[1].end(), inserter(bk, bk.begin()));
+	if (setsCollection.size() == 2) { target = bk; return; }
+	for (int i = 2; i < setsCollection.size(); i++)
+	{
+		target.clear();
+		set_intersection(setsCollection[i].begin(), setsCollection[i].end(), bk.begin(), bk.end(), inserter(target, target.begin()));
+		bk = target;
+	}
+	return;
+} 
 
 int main()
 {
@@ -37,7 +55,7 @@ int main()
 
 	set<string> allTypes;
 	vector<string> auxiliary;
-	map<int, vector<string>> fishermanData;
+	map<int, set<string>> fishermanData;
 	vector<set<string>> fishermanSets;
 
 	fstream in("in.txt");
@@ -52,34 +70,32 @@ int main()
 	{
 		getline(in, data);
 		split(data, auxiliary);
-		fishermanData.insert(make_pair(id, auxiliary));
 
 		set<string> st;
 		copy(auxiliary.begin(), auxiliary.end(), inserter(st, st.begin()));
 		fishermanSets.push_back(st);
+		fishermanData.insert(make_pair(id, st));
 		auxiliary.clear();
 	}
-
 	in.close();
 
 	ofstream out; out.open("out.txt", ios::trunc);
 	assert(out.is_open());
 	// Each fisherman has ...
-	for_each(fishermanData.begin(), fishermanData.end(), [&out](pair<int, vector<string>> pair)
-	{
-		out << "Fisherman" << pair.first << " has : "; 
-		copy(pair.second.begin(), pair.second.end(), ostream_iterator<string>(out, "  ")); 
-		out << endl;
-	});
-	out << dline;
+	set<string> intersection;  getIntersection(fishermanSets, intersection);
+	out << "Intersection : ";
+	copy(intersection.begin(), intersection.end(), ostream_iterator<string>(out, " "));
 
+	out << endl << dline;
 
 	set<string> fUnion; getUnion(fishermanSets,fUnion);
+	out << "Union : ";
 	copy(fUnion.begin(), fUnion.end(), ostream_iterator<string>(out, " "));
 	out << endl << dline;
 
 	set<string> diff;
 	set_difference(allTypes.begin(), allTypes.end(), fUnion.begin(), fUnion.end(), inserter(diff, diff.begin()));
+	out << "Difference : ";
 	copy(diff.begin(), diff.end(), ostream_iterator<string>(out, " "));
 	out << endl << dline;
 	out.close();
