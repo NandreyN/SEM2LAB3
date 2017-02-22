@@ -1,10 +1,10 @@
-Fisherman1 has : type1  type6  
-Fisherman2 has : type1  type6  type2  
-Fisherman3 has : type9  type9  type6  type3  
-Fisherman4 has : type1  type1  type9  
-Fisherman5 has : type1  type2  type3  type5  type6  type7  type8  type9  
+Fisherman1 has : t1  t6  
+Fisherman2 has : t2  t6  t1  
+Fisherman3 has : t9  t9  t6  t3  
+Fisherman4 has : t1  t1  t9  
+Fisherman5 has : t1  t2  t3  t5  t6  t7  t8  t9  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-type1 type2 type3 type5 type6 type7 type8 type9 
+t1 t2 t3 t5 t6 t7 t8 t9 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-type4 
+t4 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

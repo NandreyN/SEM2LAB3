@@ -8,8 +8,6 @@
 #include <sstream>
 #include <vector>
 #include <iterator>
-#include  <numeric>
-
 using namespace std;
 
 void split(const string& str, vector<string>& target)
@@ -24,14 +22,12 @@ ostream& dline(ostream& o)
 	return o;
 }
 
-set<string> getUnion(const vector<set<string>>& setsCollection)
+void getUnion(const vector<set<string>>& setsCollection, set<string>& target)
 {
-	set<string> result;
-	for_each(setsCollection.begin(), setsCollection.end(), [&result](const set<string>& st)
+	for_each(setsCollection.begin(), setsCollection.end(), [&target](const set<string>& st)
 	{
-		result.insert(st.begin(), st.end());
+		target.insert(st.begin(), st.end());
 	});
-	return result;
 }
 
 int main()
@@ -78,10 +74,9 @@ int main()
 	out << dline;
 
 
-	set<string> fUnion = getUnion(fishermanSets);
+	set<string> fUnion; getUnion(fishermanSets,fUnion);
 	copy(fUnion.begin(), fUnion.end(), ostream_iterator<string>(out, " "));
 	out << endl << dline;
-
 
 	set<string> diff;
 	set_difference(allTypes.begin(), allTypes.end(), fUnion.begin(), fUnion.end(), inserter(diff, diff.begin()));
