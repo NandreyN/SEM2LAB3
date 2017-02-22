@@ -35,17 +35,13 @@ void getIntersection(const vector<set<string>>& setsCollection, set<string>& tar
 {
 	set<string> bk;
 	assert(setsCollection.size() > 0);
-	if (setsCollection.size() == 1) { target = setsCollection[0]; return; }
-
-	set_intersection(setsCollection[0].begin(), setsCollection[0].end(), setsCollection[1].begin(), setsCollection[1].end(), inserter(bk, bk.begin()));
-	if (setsCollection.size() == 2) { target = bk; return; }
-	for (int i = 2; i < setsCollection.size(); i++)
+	bk = setsCollection[0];
+	for (int i = 1; i < setsCollection.size(); i++)
 	{
 		target.clear();
 		set_intersection(setsCollection[i].begin(), setsCollection[i].end(), bk.begin(), bk.end(), inserter(target, target.begin()));
 		bk = target;
 	}
-	return;
 } 
 
 int main()
